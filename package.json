@@ -1,6 +1,6 @@
 {
-  "name": "fathym-eac-management",
-  "version": "0.1.0",
+  "name": "@fathym/eac-management",
+  "version": "0.0.0",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -26,7 +26,8 @@
     "build": "react-scripts build",
     "deploy": "npm version patch && npm run deploy:app",
     "deploy:app": "npm version patch --prefix public && npm run build && npm publish ./build --access public",
-    "start": "react-scripts start",
+    "start": "concurrently \"npm:start:*\"",
+    "start:react": "react-scripts start",
     "start:fluid": "npx @fluidframework/azure-local-service@latest",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -51,6 +52,7 @@
   },
   "devDependencies": {
     "@fluidframework/azure-local-service": "^1.1.0",
-    "buffer": "^6.0.3"
+    "buffer": "^6.0.3",
+    "concurrently": "^7.5.0"
   }
 }
