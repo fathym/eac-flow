@@ -1,5 +1,5 @@
 {
-  "name": "@fathym/eac-management",
+  "name": "@fathym/eac-flow",
   "version": "0.0.0",
   "private": true,
   "dependencies": {
