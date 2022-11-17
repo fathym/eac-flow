@@ -112,7 +112,7 @@ export default class BaseLayout extends React.Component<
 
         <Box
           sx={{
-            marginTop: 'calc(56px)',
+            marginTop: 'calc(56px + 1em)',
           }}
         >
           {this.props.children}
