@@ -15,6 +15,9 @@ export default {
   component: FathymAction,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},
+  parameters: {
+    layout: 'centered',
+  },
 } as ComponentMeta<typeof FathymAction>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
