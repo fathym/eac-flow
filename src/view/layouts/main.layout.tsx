@@ -35,8 +35,6 @@ export default class MainLayout extends React.Component<
   public render() {
     return (
       <BaseLayout title={this.props.title} actions={this.props.actions}>
-        <h2>Main Layout</h2>
-
         {this.props.children}
       </BaseLayout>
     );
