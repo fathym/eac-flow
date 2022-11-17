@@ -5,13 +5,13 @@ import {
   FathymAction,
   FathymActionModel,
   FathymActionTypes,
-} from '../common/FathymAction';
+} from '../../common/FathymAction';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Common/FathymAction',
+  title: 'Common/Fathym Action',
   component: FathymAction,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},

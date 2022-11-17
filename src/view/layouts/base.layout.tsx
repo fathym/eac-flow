@@ -143,6 +143,7 @@ export default class BaseLayout extends React.Component<
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
             width: '80%',
+            maxWidth: '350px',
           },
         }}
       >

@@ -1,7 +1,14 @@
 import React from 'react';
-import BaseLayout, { BaseLayoutProperties } from './base.layout';
+import { FathymActionModel } from '../../common/FathymAction';
+import BaseLayout from './base.layout';
 
-class NoEscapeLayoutProperties extends BaseLayoutProperties {}
+class NoEscapeLayoutProperties {
+  public action?: FathymActionModel;
+
+  public children: React.ReactNode;
+
+  public title!: string;
+}
 
 class NoEscapeLayoutState {}
 
@@ -32,8 +39,10 @@ export default class NoEscapeLayout extends React.Component<
 
   //# API Methods
   public render() {
+    const actions = this.props.action ? [this.props.action!] : [];
+
     return (
-      <BaseLayout title={this.props.title}>
+      <BaseLayout title={this.props.title} actions={actions}>
         {this.props.children}
       </BaseLayout>
     );
