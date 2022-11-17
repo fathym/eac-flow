@@ -11,7 +11,7 @@ import {
   FathymAction,
   FathymActionModel,
   FathymActionTypes,
-} from '../../common/action.model';
+} from '../../common/FathymAction';
 import ListItem from '@mui/material/ListItem';
 import Drawer from '@mui/material/Drawer';
 

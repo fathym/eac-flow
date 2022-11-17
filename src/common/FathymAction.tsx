@@ -11,6 +11,8 @@ export enum FathymActionTypes {
 }
 
 export class FathymActionModel {
+  [propName: string]: any;
+
   public Action!: string | (() => Promise<void>);
 
   public Actions?: FathymActionModel[];
@@ -71,6 +73,7 @@ export class FathymAction extends React.Component<
             sx={this.props.sx}
             href={this.actionPath as string}
             onClick={this.actionHandler}
+            {...this.props.action}
           >
             {this.props.action.StartIcon ? (
               <ListItemIcon>{this.props.action.StartIcon}</ListItemIcon>
@@ -78,7 +81,7 @@ export class FathymAction extends React.Component<
               ''
             )}
 
-            <ListItemText primary={this.props.action.Text} />
+            <ListItemText primary={this.props.children || this.props.action.Text} />
 
             {this.props.action.EndIcon ? (
               <ListItemIcon>{this.props.action.EndIcon}</ListItemIcon>
@@ -97,8 +100,9 @@ export class FathymAction extends React.Component<
             startIcon={this.props.action.StartIcon}
             href={this.actionPath}
             onClick={this.actionHandler}
+            {...this.props.action}
           >
-            {this.props.action.Text}
+            {this.props.children || this.props.action.Text}
           </Button>
         );
     }

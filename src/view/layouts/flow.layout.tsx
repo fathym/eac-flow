@@ -1,5 +1,5 @@
 import React from 'react';
-import { FathymActionModel } from '../../common/action.model';
+import { FathymActionModel } from '../../common/FathymAction';
 import BaseLayout, { BaseLayoutProperties } from './base.layout';
 
 export class FlowLayoutProperties extends BaseLayoutProperties {}

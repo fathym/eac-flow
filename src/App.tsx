@@ -22,7 +22,7 @@ import CreateFlowPage from './view/pages/CreateFlow.page';
 import FlowLayout from './view/layouts/flow.layout';
 import MainLayout from './view/layouts/main.layout';
 import NoEscapeLayout from './view/layouts/no-escape.layout';
-import { FathymActionModel } from './common/action.model';
+import { FathymActionModel } from './common/FathymAction';
 
 class AppProperties {}
 
@@ -68,10 +68,12 @@ export default class App extends React.Component<AppProperties, AppState> {
     const standardActions: FathymActionModel[] = [
       {
         Action: '/dashboard',
+        Props: {},
         Text: 'Home',
       },
       {
         Action: '/flows',
+        Props: {},
         Text: 'Flows',
       },
     ];
