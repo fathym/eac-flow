@@ -21,10 +21,26 @@ export default {
 const template: ComponentStory<typeof FathymAction> = (args) => (
   <FathymAction {...args} />
 );
+const templateWithChildren: ComponentStory<typeof FathymAction> = (args) => (
+  <FathymAction {...args}>
+    <div>Fathym</div>
+  </FathymAction>
+);
 const templateListItem: ComponentStory<typeof FathymAction> = (args) => (
   <List>
     <ListItem disablePadding>
       <FathymAction {...args} />
+    </ListItem>
+  </List>
+);
+const templateListItemWithChildren: ComponentStory<typeof FathymAction> = (
+  args
+) => (
+  <List>
+    <ListItem disablePadding>
+      <FathymAction {...args}>
+        <div>Fathym</div>
+      </FathymAction>
     </ListItem>
   </List>
 );
@@ -48,26 +64,20 @@ WithVariant.args = {
   type: FathymActionTypes.Button,
 };
 
-export const WithChildren = template.bind({});
+export const WithChildren = templateWithChildren.bind({});
 WithChildren.args = {
   action: {
     Action: 'https://www.fathym.com/',
   } as FathymActionModel,
-  children: <div>Fathym</div>,
   type: FathymActionTypes.Button,
 };
 
-export const WithChildrenWithColor = template.bind({});
+export const WithChildrenWithColor = templateWithChildren.bind({});
 WithChildrenWithColor.args = {
   action: {
     Action: 'https://www.fathym.com/',
     color: 'error',
   } as FathymActionModel,
-  children: (
-    <h3>
-      <strong>Fathym</strong>
-    </h3>
-  ),
   type: FathymActionTypes.Button,
 };
 
@@ -90,12 +100,11 @@ ListItemDefault.args = {
   type: FathymActionTypes.ListItem,
 };
 
-export const ListItemWithChildren = template.bind({});
+export const ListItemWithChildren = templateListItemWithChildren.bind({});
 ListItemWithChildren.args = {
   action: {
     Action: 'https://www.fathym.com/',
   } as FathymActionModel,
-  children: <div>Fathym</div>,
   type: FathymActionTypes.ListItem,
 };
 
