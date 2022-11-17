@@ -1,7 +1,6 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { LoadableObjectRecord, SharedMap } from 'fluid-framework';
+import { SharedMap } from 'fluid-framework';
 import {
   AzureClient,
   AzureClientProps,
@@ -10,6 +9,20 @@ import {
   AzureUser,
 } from '@fluidframework/azure-client';
 import { InsecureTokenProvider } from '@fluidframework/test-client-utils';
+import {
+  Link,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+  Navigate,
+} from 'react-router-dom';
+import FlowsPage from './view/pages/Flows.page';
+import FlowPage from './view/pages/Flow.page';
+import CreateFlowPage from './view/pages/CreateFlow.page';
+import FlowLayout from './view/layouts/flow.layout';
+import MainLayout from './view/layouts/main.layout';
+import NoEscapeLayout from './view/layouts/no-escape.layout';
+import { FathymActionModel } from './common/action.model';
 
 class AppProperties {}
 
@@ -39,7 +52,7 @@ export default class App extends React.Component<AppProperties, AppState> {
 
   //# Life Cycle
   public async componentDidMount() {
-    await this.setCurrentTime();
+    // await this.setCurrentTime();
   }
   //#
   protected async setCurrentTime() {
@@ -52,24 +65,54 @@ export default class App extends React.Component<AppProperties, AppState> {
 
   //# API Methods
   public render() {
+    const standardActions: FathymActionModel[] = [
+      {
+        Action: '/dashboard',
+        Text: 'Home',
+      },
+      {
+        Action: '/flows',
+        Text: 'Flows',
+      },
+    ];
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          {/* <p>{this.state.Time?.getUTCMilliseconds()}</p> */}
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Navigate to="/flows" replace />} />
+
+          <Route path="flow">
+            <Route
+              path=":id"
+              element={
+                <FlowLayout title="Flow Manager" actions={standardActions}>
+                  <FlowPage />
+                </FlowLayout>
+              }
+            />
+          </Route>
+
+          <Route path="flows">
+            <Route
+              path=""
+              element={
+                <MainLayout title="Flows" actions={standardActions}>
+                  <FlowsPage />
+                </MainLayout>
+              }
+            />
+
+            <Route
+              path="create"
+              element={
+                <NoEscapeLayout title="Create a Flow">
+                  <CreateFlowPage />
+                </NoEscapeLayout>
+              }
+            />
+          </Route>
+        </Routes>
+      </Router>
     );
   }
   //#
@@ -77,7 +120,9 @@ export default class App extends React.Component<AppProperties, AppState> {
   //# Helpers
   protected buildClient(): AzureClient {
     const config: AzureRemoteConnectionConfig | AzureLocalConnectionConfig = {
-      tokenProvider: new InsecureTokenProvider('', { id: 'userId' } as AzureUser),
+      tokenProvider: new InsecureTokenProvider('', {
+        id: 'userId',
+      } as AzureUser),
       endpoint: 'http://localhost:7070',
       type: 'local',
     };
