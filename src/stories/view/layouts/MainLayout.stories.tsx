@@ -6,7 +6,7 @@ import MainLayout from '../../../view/layouts/main.layout';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Views/Layouts/Main Layout',
+  title: 'Views/Layouts/Main',
   component: MainLayout,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},

@@ -9,8 +9,8 @@ import {
   AzureUser,
 } from '@fluidframework/azure-client';
 import { InsecureTokenProvider } from '@fluidframework/test-client-utils';
+import { ThemeProvider, createTheme, Theme } from '@mui/material/styles';
 import {
-  Link,
   Route,
   BrowserRouter as Router,
   Routes,
@@ -34,6 +34,7 @@ class AppState {
 
 export default class App extends React.Component<AppProperties, AppState> {
   //#  Fields
+  protected theme: Theme;
   //#
 
   //# Properties
@@ -47,6 +48,18 @@ export default class App extends React.Component<AppProperties, AppState> {
     super(props);
 
     this.state = new AppState();
+
+    this.theme = createTheme({
+      palette: {
+        mode: 'dark',
+        primary: {
+          main: '#4a918e',
+        },
+        secondary: {
+          main: '#4A7191',
+        },
+      },
+    });
   }
   //#
 
@@ -79,42 +92,44 @@ export default class App extends React.Component<AppProperties, AppState> {
     ];
 
     return (
-      <Router>
-        <Routes>
-          <Route path="/" element={<Navigate to="/flows" replace />} />
+      <ThemeProvider theme={this.theme}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Navigate to="/flows" replace />} />
 
-          <Route path="flow">
-            <Route
-              path=":id"
-              element={
-                <FlowLayout title="Flow Manager" actions={standardActions}>
-                  <FlowPage />
-                </FlowLayout>
-              }
-            />
-          </Route>
+            <Route path="flow">
+              <Route
+                path=":id"
+                element={
+                  <FlowLayout title="Flow Manager" actions={standardActions}>
+                    <FlowPage />
+                  </FlowLayout>
+                }
+              />
+            </Route>
 
-          <Route path="flows">
-            <Route
-              path=""
-              element={
-                <MainLayout title="Flows" actions={standardActions}>
-                  <FlowsPage />
-                </MainLayout>
-              }
-            />
+            <Route path="flows">
+              <Route
+                path=""
+                element={
+                  <MainLayout title="Flows" actions={standardActions}>
+                    <FlowsPage />
+                  </MainLayout>
+                }
+              />
 
-            <Route
-              path="create"
-              element={
-                <NoEscapeLayout title="Create a Flow">
-                  <CreateFlowPage />
-                </NoEscapeLayout>
-              }
-            />
-          </Route>
-        </Routes>
-      </Router>
+              <Route
+                path="create"
+                element={
+                  <NoEscapeLayout title="Create a Flow">
+                    <CreateFlowPage />
+                  </NoEscapeLayout>
+                }
+              />
+            </Route>
+          </Routes>
+        </Router>
+      </ThemeProvider>
     );
   }
   //#

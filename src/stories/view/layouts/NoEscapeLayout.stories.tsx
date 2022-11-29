@@ -6,7 +6,7 @@ import NoEscapeLayout from '../../../view/layouts/no-escape.layout';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Views/Layouts/No Escape Layout',
+  title: 'Views/Layouts/No Escape',
   component: NoEscapeLayout,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},

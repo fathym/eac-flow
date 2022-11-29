@@ -6,7 +6,7 @@ import { FathymActionModel } from '../../../common/FathymAction';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Views/Layouts/Base Layout',
+  title: 'Views/Layouts/Base',
   component: BaseLayout,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},

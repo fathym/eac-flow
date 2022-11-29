@@ -1,4 +1,5 @@
 import React from 'react';
+import { FathymAction, FathymActionTypes } from '../../common/FathymAction';
 
 class FlowsPageProperties {}
 
@@ -31,7 +32,22 @@ export default class FlowsPage extends React.Component<
 
   //# API Methods
   public render() {
-    return <div>Flows List</div>;
+    return (
+      <div>
+        Flows List
+        <div>
+          <FathymAction
+            action={{
+              Text: 'Create Flow',
+              Action: '/flows/create',
+              variant: 'outlined',
+              color: 'primary',
+            }}
+            type={FathymActionTypes.Button}
+          />
+        </div>
+      </div>
+    );
   }
   //#
 
