@@ -107,7 +107,7 @@ export class GalleryDisplay extends React.Component<
     const maxPosition =
       (this.scroller?.current?.ScrollWidth || 0) -
       (this.scroller?.current?.Width || 0) -
-      1;
+      1;  // Due to how the scroll position works, need to sutract 1 to fit within the proper max
 
     return (
       !!this.props.directionAction &&
