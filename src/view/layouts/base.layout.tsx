@@ -78,6 +78,8 @@ export default class BaseLayout extends React.Component<
               ''
             )}
 
+            {/* TODO:  Fathym/Thinky Icon */}
+
             <Typography
               variant="h6"
               component="div"
@@ -113,9 +115,7 @@ export default class BaseLayout extends React.Component<
         <Box
           display="flex"
           flex="0 0 100%"
-          sx={{
-            marginTop: '64px',
-          }}
+          sx={{ paddingTop: '64px' }}
         >
           {this.props.children}
         </Box>

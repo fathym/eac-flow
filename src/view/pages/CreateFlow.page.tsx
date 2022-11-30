@@ -5,7 +5,8 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import React from 'react';
-import TemplatesGallery from '../controls/TemplatesGallery';
+import Gallery from '../../common/Gallery';
+import { GalleryItem } from '../../common/GalleryItem';
 
 class CreateFlowPageProperties {
   public flowName?: string;
@@ -46,13 +47,34 @@ export default class CreateFlowPage extends React.Component<
 
   //# API Methods
   public render() {
+    const reusableItemData: { [lookup: string]: any } = {};
+
+    const reusableItems = Array.from(new Array(50), (x, i) => i + 1).map(
+      (i) => {
+        const randCat1 = Math.floor(Math.random() * 5);
+        const randCat2 = Math.floor(Math.random() * 5);
+
+        const lookup = `test-item-${i}`;
+
+        reusableItemData[lookup] = {
+          Name: `Test Item ${i}`,
+        };
+
+        return {
+          Lookup: lookup,
+          Categories: [`Cat ${randCat1}`, `Cat ${randCat2}`],
+          Type: 'AType',
+        };
+      }
+    );
+
     return (
       <Box
         display="flex"
         flex="1"
         justifyContent="center"
-        alignItems="center"
         minHeight="100vh"
+        sx={{ paddingTop: '8em' }}
       >
         <Box
           display="flex"
@@ -63,7 +85,7 @@ export default class CreateFlowPage extends React.Component<
           <Typography variant="h4" component="div" textAlign="center">
             Create New
             <br />
-            Fatyhm Flow
+            Fathym Flow
           </Typography>
 
           <div>
@@ -76,7 +98,11 @@ export default class CreateFlowPage extends React.Component<
           </div>
 
           <Stack spacing={2}>
-            <Button color="primary" variant="outlined">
+            <Button
+              color="primary"
+              variant="outlined"
+              onClick={() => this.setDrawerState(true)}
+            >
               Create from Template
             </Button>
 
@@ -86,10 +112,32 @@ export default class CreateFlowPage extends React.Component<
 
         <Drawer
           anchor="bottom"
-          open={true}
+          open={this.state.TemplatesOpen}
           onClose={() => this.setDrawerState(false)}
         >
-          <TemplatesGallery />
+          <Box sx={{ maxHeight: '450px', overflowY: 'auto', padding: '1em' }}>
+            <Gallery
+              title="Create Templates"
+              items={reusableItems}
+              spacing="1em .5em"
+              itemSpacing=".5em"
+            >
+              {(catItem: GalleryItem) => (
+                <Box
+                  key={catItem.Lookup}
+                  sx={{
+                    width: '100px',
+                    display: 'flex',
+                    height: '100px',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  {reusableItemData[catItem.Lookup].Name}
+                </Box>
+              )}
+            </Gallery>
+          </Box>
         </Drawer>
       </Box>
     );

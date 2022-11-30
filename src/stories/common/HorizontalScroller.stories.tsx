@@ -26,9 +26,7 @@ const template: ComponentStory<typeof HorizontalScroller> = (args) => (
   </Box>
 );
 
-const reusableChildren: React.ReactNode[] = [
-  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-].map((i) => {
+const reusableChildren: React.ReactNode[] = Array.from(new Array(20), (x, i) => i + 1).map((i) => {
   return (
     <Box sx={{ width: '200px', height: '150px', border: '1px solid black' }}>
       {i}

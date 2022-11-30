@@ -23,6 +23,7 @@ import FlowLayout from './view/layouts/flow.layout';
 import MainLayout from './view/layouts/main.layout';
 import NoEscapeLayout from './view/layouts/no-escape.layout';
 import { FathymActionModel } from './common/FathymAction';
+import CssBaseline from '@mui/material/CssBaseline';
 
 class AppProperties {}
 
@@ -93,6 +94,8 @@ export default class App extends React.Component<AppProperties, AppState> {
 
     return (
       <ThemeProvider theme={this.theme}>
+        <CssBaseline />
+        
         <Router>
           <Routes>
             <Route path="/" element={<Navigate to="/flows" replace />} />
@@ -101,7 +104,7 @@ export default class App extends React.Component<AppProperties, AppState> {
               <Route
                 path=":id"
                 element={
-                  <FlowLayout title="Flow Manager" actions={standardActions}>
+                  <FlowLayout title="Fathym Flow Manager" actions={standardActions}>
                     <FlowPage />
                   </FlowLayout>
                 }
@@ -112,7 +115,7 @@ export default class App extends React.Component<AppProperties, AppState> {
               <Route
                 path=""
                 element={
-                  <MainLayout title="Flows" actions={standardActions}>
+                  <MainLayout title="Fathym Flows" actions={standardActions}>
                     <FlowsPage />
                   </MainLayout>
                 }
@@ -121,7 +124,7 @@ export default class App extends React.Component<AppProperties, AppState> {
               <Route
                 path="create"
                 element={
-                  <NoEscapeLayout title="Create a Flow">
+                  <NoEscapeLayout title="Fathym Flow">
                     <CreateFlowPage />
                   </NoEscapeLayout>
                 }

@@ -65,7 +65,7 @@ export class GalleryDisplay extends React.Component<
         flexDirection="column"
         sx={{ overflowX: 'scroll', '::-webkit-scrollbar': { display: 'none' } }}
       >
-        <Typography variant="h4">{this.props.title}</Typography>
+        <Typography variant="h5">{this.props.title}</Typography>
 
         <Box display="flex" flexDirection="row" sx={{ position: 'relative' }}>
           {this.loadPrevAction()}
