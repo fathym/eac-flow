@@ -70,7 +70,7 @@ export class HorizontalScroller extends React.Component<
               flexGrow={0}
               flexShrink={0}
               flexBasis="auto"
-              sx={{ margin: this.props.spacing }}
+              sx={{ padding: this.props.spacing }}
               key={i}
             >
               {child}

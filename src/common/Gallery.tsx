@@ -94,7 +94,7 @@ export default class Gallery extends React.Component<
         const catItems = categoryMap[category];
 
         return (
-          <Box sx={{ margin: this.props.spacing }}>
+          <Box sx={{ padding: this.props.spacing }}>
             <GalleryDisplay
               key={category}
               title={category}

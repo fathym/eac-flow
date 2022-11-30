@@ -61,7 +61,7 @@ export default class BaseLayout extends React.Component<
     const drawer = this.loadDrawer();
 
     return (
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <AppBar component="nav">
           <Toolbar>
             {this.hasMultipleActions ? (
@@ -114,7 +114,7 @@ export default class BaseLayout extends React.Component<
 
         <Box
           display="flex"
-          flex="0 0 100%"
+          flex="0 0 calc(100% - 64px)"
           sx={{ paddingTop: '64px' }}
         >
           {this.props.children}
