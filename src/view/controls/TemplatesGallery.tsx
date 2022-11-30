@@ -1,15 +1,12 @@
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import React from 'react';
-import { HorizontalScroller } from '../../common/HorizontalScroller';
+import { GalleryDisplay } from '../../common/GalleryDisplay';
 
 class TemplatesGalleryProperties {
   public templates?: any[];
+
+  public title?: string;
 }
 
 class TemplatesGalleryState {
@@ -25,6 +22,7 @@ export default class TemplatesGallery extends React.Component<
   TemplatesGalleryState
 > {
   //#  Fields
+  static defaultProps = new TemplatesGalleryProperties();
   //#
 
   //# Properties
@@ -50,19 +48,23 @@ export default class TemplatesGallery extends React.Component<
     return (
       <Box
         display="flex"
-        flex="1"
+        flexDirection="column"
         justifyContent="left"
         alignItems="left"
         minHeight="100%"
       >
-        <HorizontalScroller>
+        <Typography variant="h3" component="div">
+          {this.props.title}
+        </Typography>
+
+        <GalleryDisplay title="Test 1">
           {[
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
             20,
           ].map((i) => {
             return <Box sx={{ width: '200px', height: '150px' }}>{i}</Box>;
           })}
-        </HorizontalScroller>
+        </GalleryDisplay>
       </Box>
     );
   }

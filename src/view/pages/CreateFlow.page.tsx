@@ -89,10 +89,6 @@ export default class CreateFlowPage extends React.Component<
           open={true}
           onClose={() => this.setDrawerState(false)}
         >
-          <Typography variant="h3" component="div" textAlign="center">
-            Select Teamplate
-          </Typography>
-
           <TemplatesGallery />
         </Drawer>
       </Box>
