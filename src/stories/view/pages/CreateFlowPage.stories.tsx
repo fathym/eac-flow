@@ -21,5 +21,11 @@ FlowName.args = {};
 
 export const WithFlowName = template.bind({});
 WithFlowName.args = {
-  flowName: 'Default Flow Name'
+  flowName: 'Default Flow Name',
+};
+
+export const WithFlowTemplate = template.bind({});
+WithFlowTemplate.args = {
+  flowName: 'Default Flow Name',
+  flowTemplate: 'test-item-1',
 };

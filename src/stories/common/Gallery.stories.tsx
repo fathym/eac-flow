@@ -20,26 +20,29 @@ const template: ComponentStory<typeof TemplatesGallery> = (args) => (
   <TemplatesGallery {...args} />
 );
 
-  const reusableItemData: { [lookup: string]: any } = {};
+const reusableItemData: { [lookup: string]: any } = {};
 
-  const reusableItems = Array.from(new Array(50), (x, i) => i + 1).map((i) => {
-    const randCat1 = Math.floor(Math.random() * 5);
-    const randCat2 = Math.floor(Math.random() * 5);
+const reusableItems = Array.from(new Array(50), (x, i) => i + 1).map((i) => {
+  const randCat1 = Math.floor(Math.random() * 5);
+  const randCat2 = Math.floor(Math.random() * 5);
 
-    const lookup = `test-item-${i}`;
+  const lookup = `test-item-${i}`;
 
-    reusableItemData[lookup] = {
-      Name: `Test Item ${i}`,
-    };
+  reusableItemData[lookup] = {
+    Name: `Test Item ${i}`,
+  };
 
-    return {
-      Lookup: lookup,
-      Categories: [`Cat ${randCat1}`, `Cat ${randCat2}`],
-      Type: 'AType',
-    };
-  });
+  return {
+    Lookup: lookup,
+    Categories: [`Cat ${randCat1}`, `Cat ${randCat2}`],
+    Type: 'AType',
+  };
+});
 
-const basicGalleryItemBox = (catItem: GalleryItem) => (
+const basicGalleryItemBox = (
+  catItem: GalleryItem,
+  itemSelected: () => void
+) => (
   <Box
     key={catItem.Lookup}
     sx={{
@@ -49,14 +52,21 @@ const basicGalleryItemBox = (catItem: GalleryItem) => (
       alignItems: 'center',
       justifyContent: 'center',
     }}
+    onClick={() => itemSelected()}
   >
     {reusableItemData[catItem.Lookup].Name}
   </Box>
 );
 
+const singleItemBox = (catItem: GalleryItem) => catItem.Lookup;
+
 export const Default = template.bind({});
 Default.args = {
   title: 'A Gallery',
   items: reusableItems,
-  children: basicGalleryItemBox,
+  singleItemDisplay: singleItemBox,
+  singleItemTitle: (catItem) =>
+    `Select ${reusableItemData[catItem.Lookup].Name} Template`,
+  useItem: (catItem) => alert(catItem.Lookup),
+  children: basicGalleryItemBox
 };

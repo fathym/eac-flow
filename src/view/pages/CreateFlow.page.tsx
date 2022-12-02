@@ -10,9 +10,13 @@ import { GalleryItem } from '../../common/GalleryItem';
 
 class CreateFlowPageProperties {
   public flowName?: string;
+
+  public flowTemplate?: string;
 }
 
 class CreateFlowPageState {
+  public SelectedTemplate?: string;
+
   public TemplatesOpen: boolean;
 
   constructor() {
@@ -37,7 +41,10 @@ export default class CreateFlowPage extends React.Component<
   constructor(props: CreateFlowPageProperties) {
     super(props);
 
-    this.state = new CreateFlowPageState();
+    this.state = {
+      ...new CreateFlowPageState(),
+      SelectedTemplate: props.flowTemplate,
+    };
   }
   //#
 
@@ -68,6 +75,8 @@ export default class CreateFlowPage extends React.Component<
       }
     );
 
+    const curItem = reusableItemData[this.state.SelectedTemplate || ''];
+
     return (
       <Box
         display="flex"
@@ -86,6 +95,8 @@ export default class CreateFlowPage extends React.Component<
             Create New
             <br />
             Fathym Flow
+
+            {this.state.SelectedTemplate}
           </Typography>
 
           <div>
@@ -99,14 +110,20 @@ export default class CreateFlowPage extends React.Component<
 
           <Stack spacing={2}>
             <Button
-              color="primary"
-              variant="outlined"
+              color="secondary"
+              variant={!curItem ? 'outlined' : undefined}
               onClick={() => this.setDrawerState(true)}
             >
-              Create from Template
+              {!this.state.SelectedTemplate
+                ? 'Click to select a template'
+                : 'Click to change selected template'}
             </Button>
 
-            <Button color="secondary">Create Blank Flow</Button>
+            <Button color="primary" variant="contained" onClick={() => this.handleCreateFlow()}>
+              {!this.state.SelectedTemplate
+                ? 'Create Blank Flow'
+                : `Create '${curItem?.Name}' Template Flow`}
+            </Button>
           </Stack>
         </Box>
 
@@ -115,14 +132,25 @@ export default class CreateFlowPage extends React.Component<
           open={this.state.TemplatesOpen}
           onClose={() => this.setDrawerState(false)}
         >
-          <Box sx={{ maxHeight: '450px', overflowY: 'auto', padding: '1em' }}>
+          <Box
+            sx={{
+              maxHeight: '350px',
+              overflowY: 'auto',
+              padding: '1em',
+            }}
+          >
             <Gallery
-              title="Create Templates"
+              title="Select a Template"
+              singleItemDisplay={(catItem) => catItem.Lookup}
+              singleItemTitle={(catItem) =>
+                `Select ${reusableItemData[catItem.Lookup].Name} Template`
+              }
               items={reusableItems}
               spacing="1em .5em"
               itemSpacing=".5em"
+              useItem={(catItem) => this.handleUseItem(catItem)}
             >
-              {(catItem: GalleryItem) => (
+              {(catItem, itemSelected) => (
                 <Box
                   key={catItem.Lookup}
                   sx={{
@@ -133,7 +161,9 @@ export default class CreateFlowPage extends React.Component<
                     justifyContent: 'center',
                   }}
                 >
-                  {reusableItemData[catItem.Lookup].Name}
+                  <Button onClick={() => itemSelected()}>
+                    {reusableItemData[catItem.Lookup].Name}
+                  </Button>
                 </Box>
               )}
             </Gallery>
@@ -145,6 +175,18 @@ export default class CreateFlowPage extends React.Component<
   //#
 
   //# Helpers
+  protected handleCreateFlow(): void {
+
+    alert(this.state.SelectedTemplate);
+  }
+
+  protected handleUseItem(item: GalleryItem): void {
+    this.setState({
+      SelectedTemplate: item?.Lookup,
+      TemplatesOpen: false,
+    });
+  }
+
   protected setDrawerState(open: boolean): void {
     this.setState({
       TemplatesOpen: open,

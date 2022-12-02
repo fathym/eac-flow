@@ -112,11 +112,7 @@ export default class BaseLayout extends React.Component<
 
         <Box component="nav">{drawer}</Box>
 
-        <Box
-          display="flex"
-          flex="0 0 calc(100% - 64px)"
-          sx={{ paddingTop: '64px' }}
-        >
+        <Box display="flex" flex="0 0 calc(100vh - 64px)">
           {this.props.children}
         </Box>
       </Box>

@@ -9,15 +9,21 @@ import { GalleryItem } from './GalleryItem';
 class GalleryProperties {
   public BaseActionStyles: SxProps<Theme>;
 
-  public children!: (item: GalleryItem) => React.ReactNode;
+  public children!: (item: GalleryItem, itemSelected: () => void) => React.ReactNode;
 
   public items!: GalleryItem[];
 
   public itemSpacing?: string;
 
+  public singleItemDisplay!: (item: GalleryItem) => React.ReactNode;
+
+  public singleItemTitle!: (catItem: GalleryItem) => React.ReactNode;
+
   public spacing?: string;
 
-  public title?: string;
+  public title!: string;
+
+  public useItem?: (item: GalleryItem) => void;
 
   constructor() {
     this.BaseActionStyles = {
@@ -85,23 +91,42 @@ export default class Gallery extends React.Component<
 
     const categories = Object.keys(categoryMap);
 
-    const curDisplay: React.ReactNode = !!this.state.SelectedItemLookup ? (
+    const selectedItem = this.props.items.find(
+      (item) => item.Lookup === this.state.SelectedItemLookup
+    );
+
+    const curDisplay: React.ReactNode = !!selectedItem ? (
       <Box sx={{ margin: this.props.spacing }}>
-        {this.state.SelectedItemLookup}
+        {this.props.singleItemDisplay(selectedItem)}
+
+        <Box display="flex" flexDirection="row" alignItems="right">
+          <Button
+            color="primary"
+            onClick={() =>
+              this.props.useItem && this.props.useItem(selectedItem)
+            }
+          >
+            Select
+          </Button>
+        </Box>
       </Box>
     ) : (
       categories.map((category) => {
         const catItems = categoryMap[category];
 
         return (
-          <Box sx={{ padding: this.props.spacing }}>
+          <Box sx={{ padding: this.props.spacing }} key={category}>
             <GalleryDisplay
               key={category}
               title={category}
               spacing={this.props.itemSpacing}
               directionAction={this.loadDirectionAction()}
             >
-              {catItems.map((catItem) => this.props.children(catItem))}
+              {catItems.map((catItem) =>
+                this.props.children(catItem, () =>
+                  this.selectGalleryItem(catItem)
+                )
+              )}
             </GalleryDisplay>
           </Box>
         );
@@ -117,7 +142,15 @@ export default class Gallery extends React.Component<
         minHeight="100%"
       >
         <Typography variant="h4" component="div">
-          {this.props.title}
+          {!!selectedItem && (
+            <Button onClick={() => this.selectGalleryItem(undefined)}>
+              {'<'}
+            </Button>
+          )}
+
+          {!selectedItem
+            ? this.props.title
+            : this.props.singleItemTitle(selectedItem)}
         </Typography>
 
         {curDisplay}
@@ -158,6 +191,12 @@ export default class Gallery extends React.Component<
         );
       }
     };
+  }
+
+  protected selectGalleryItem(item?: GalleryItem): void {
+    this.setState({
+      SelectedItemLookup: item?.Lookup || '',
+    });
   }
   //#
 }
