@@ -1,7 +1,7 @@
 {
   "name": "@fathym/eac-flow",
   "version": "0.0.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
@@ -30,7 +30,10 @@
     "build:react": "react-scripts build",
     "build:storybook": "build-storybook -s public",
     "deploy": "npm version patch && npm run deploy:app",
-    "deploy:app": "npm version patch --prefix public && npm run build && npm publish ./build --access public",
+    "deploy:app": "npm version patch --prefix public && npm run build && concurrently \"npm:publish:*\"",
+    "publish:react": "npm publish ./build --access public",
+    "publish:storybook": "npm run rename:storybook && npm publish ./storybook-static --access public",
+    "rename:storybook": "cd ./storybook-static && npm pkg set name='@fathym/eac-flow-storybook' && cd ..",
     "start": "concurrently \"npm:start:*\"",
     "start:react": "react-scripts start",
     "start:fluid": "npx @fluidframework/azure-local-service@latest",
