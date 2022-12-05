@@ -26,7 +26,7 @@ import MainLayout from './view/layouts/main.layout';
 import NoEscapeLayout from './view/layouts/no-escape.layout';
 import { FathymActionModel } from './common/FathymAction';
 import CssBaseline from '@mui/material/CssBaseline';
-import { withRouter } from './common/withRouter.hoc';
+import { withRouter } from './stories/common/withRouter.hoc';
 import { GalleryItem } from './common/GalleryItem';
 
 class AppProperties {
