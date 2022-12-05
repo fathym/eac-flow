@@ -33,7 +33,7 @@
     "deploy:app": "npm version patch --prefix public && npm run build && concurrently \"npm:publish:*\"",
     "publish:react": "npm publish ./build --access public",
     "publish:storybook": "npm run rename:storybook && npm publish ./storybook-static --access public",
-    "rename:storybook": "cd ./storybook-static && npm pkg set name='@fathym/eac-flow-storybook' && cd ..",
+    "rename:storybook": "cd ./storybook-static && npm pkg set name=@fathym/eac-flow-storybook && cd ..",
     "start": "concurrently \"npm:start:*\"",
     "start:react": "react-scripts start",
     "start:fluid": "npx @fluidframework/azure-local-service@latest",
