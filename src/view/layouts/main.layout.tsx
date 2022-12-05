@@ -1,4 +1,5 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 import BaseLayout, { BaseLayoutProperties } from './base.layout';
 
 class MainLayoutProperties extends BaseLayoutProperties {
@@ -36,6 +37,7 @@ export default class MainLayout extends React.Component<
     return (
       <BaseLayout title={this.props.title} actions={this.props.actions}>
         {this.props.children}
+        {/* <Outlet /> */}
       </BaseLayout>
     );
   }

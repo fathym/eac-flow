@@ -109,6 +109,6 @@ export class FathymAction extends React.Component<
   }
   //#
 
-  //# Helpers
+  //# Helper
   //#
 }

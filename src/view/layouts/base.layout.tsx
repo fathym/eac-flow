@@ -18,7 +18,7 @@ import Drawer from '@mui/material/Drawer';
 export class BaseLayoutProperties {
   public actions?: FathymActionModel[];
 
-  public children: React.ReactNode;
+  public children?: React.ReactNode;
 
   public title!: string;
 }
@@ -112,7 +112,11 @@ export default class BaseLayout extends React.Component<
 
         <Box component="nav">{drawer}</Box>
 
-        <Box display="flex" flex="0 0 calc(100vh - 64px)">
+        <Box
+          display="flex"
+          flex="0 0 auto"
+          sx={{ paddingTop: '64px' }}
+        >
           {this.props.children}
         </Box>
       </Box>

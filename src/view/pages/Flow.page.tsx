@@ -1,6 +1,9 @@
 import React from 'react';
+import { FathymFlow } from "../../stories/common/FathymFlow";
 
-class FlowPageProperties {}
+class FlowPageProperties {
+  public flow!: FathymFlow;
+}
 
 class FlowPageState {}
 
@@ -9,6 +12,7 @@ export default class FlowPage extends React.Component<
   FlowPageState
 > {
   //#  Fields
+  static defaultProps = new FlowPageProperties();
   //#
 
   //# Properties

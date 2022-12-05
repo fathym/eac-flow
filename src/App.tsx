@@ -15,8 +15,10 @@ import {
   BrowserRouter as Router,
   Routes,
   Navigate,
+  NavigateFunction,
 } from 'react-router-dom';
 import FlowsPage from './view/pages/Flows.page';
+import { FathymFlow } from './stories/common/FathymFlow';
 import FlowPage from './view/pages/Flow.page';
 import CreateFlowPage from './view/pages/CreateFlow.page';
 import FlowLayout from './view/layouts/flow.layout';
@@ -24,8 +26,12 @@ import MainLayout from './view/layouts/main.layout';
 import NoEscapeLayout from './view/layouts/no-escape.layout';
 import { FathymActionModel } from './common/FathymAction';
 import CssBaseline from '@mui/material/CssBaseline';
+import { withRouter } from './common/withRouter.hoc';
+import { GalleryItem } from './common/GalleryItem';
 
-class AppProperties {}
+class AppProperties {
+  // public navigate?: NavigateFunction;
+}
 
 class AppState {
   public Data?: SharedMap;
@@ -33,7 +39,7 @@ class AppState {
   public Time?: Date;
 }
 
-export default class App extends React.Component<AppProperties, AppState> {
+class App extends React.Component<AppProperties, AppState> {
   //#  Fields
   protected theme: Theme;
   //#
@@ -79,6 +85,27 @@ export default class App extends React.Component<AppProperties, AppState> {
 
   //# API Methods
   public render() {
+    const reusableItemData: { [key: string]: any } = {};
+
+    const reusableItems = Array.from(new Array(50), (x, i) => i + 1).map(
+      (i) => {
+        const randCat1 = Math.floor(Math.random() * 5);
+        const randCat2 = Math.floor(Math.random() * 5);
+
+        const lookup = `test-item-${i}`;
+
+        reusableItemData[lookup] = {
+          Name: `Test Item ${i}`,
+        };
+
+        return {
+          Lookup: lookup,
+          Categories: [`Cat ${randCat1}`, `Cat ${randCat2}`],
+          Type: 'Template',
+        } as GalleryItem;
+      }
+    );
+
     const standardActions: FathymActionModel[] = [
       {
         Action: '/dashboard',
@@ -92,20 +119,25 @@ export default class App extends React.Component<AppProperties, AppState> {
       },
     ];
 
+    const curFlow: FathymFlow | undefined = undefined;
+
     return (
       <ThemeProvider theme={this.theme}>
         <CssBaseline />
-        
+
         <Router>
           <Routes>
             <Route path="/" element={<Navigate to="/flows" replace />} />
 
             <Route path="flow">
               <Route
-                path=":id"
+                path=":lookup"
                 element={
-                  <FlowLayout title="Fathym Flow Manager" actions={standardActions}>
-                    <FlowPage />
+                  <FlowLayout
+                    title="Fathym Flow Manager"
+                    actions={standardActions}
+                  >
+                    <FlowPage flow={curFlow} />
                   </FlowLayout>
                 }
               />
@@ -116,7 +148,15 @@ export default class App extends React.Component<AppProperties, AppState> {
                 path=""
                 element={
                   <MainLayout title="Fathym Flows" actions={standardActions}>
-                    <FlowsPage />
+                    <FlowsPage
+                      createFlow={() => {
+                        this.navigate('/flows/create');
+                      }}
+                      flows={[]}
+                      flowSelected={(flow) => {
+                        this.navigate(`/flow/${flow.Lookup}`);
+                      }}
+                    />
                   </MainLayout>
                 }
               />
@@ -125,7 +165,11 @@ export default class App extends React.Component<AppProperties, AppState> {
                 path="create"
                 element={
                   <NoEscapeLayout title="Fathym Flow">
-                    <CreateFlowPage />
+                    <CreateFlowPage
+                      createFlow={(flow) => this.handleCreateFlow(flow)}
+                      getTemplateData={(lookup) => reusableItemData[lookup || '']}
+                      templates={reusableItems}
+                    />
                   </NoEscapeLayout>
                 }
               />
@@ -181,5 +225,19 @@ export default class App extends React.Component<AppProperties, AppState> {
 
     return container.initialObjects.sharedTime as SharedMap;
   }
+
+  protected handleCreateFlow(flow: FathymFlow): void {
+    console.log(flow);
+  }
+
+  protected navigate(path: string): void {
+    window.location.href = path;
+
+    // this.props.navigate &&
+    //   this.props.navigate(path);
+  }
   //#
 }
+
+// export default withRouter(App);
+export default App;
